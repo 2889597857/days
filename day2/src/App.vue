@@ -8,20 +8,27 @@
       />
     </div>
     <div class="submit">
-      <button @click="aaaa">暂存</button>
-      <button @click="result">提交</button>
-      <button @click="top">顶部</button>
-      <!-- <button @click="scroll(14)">顶部</button> -->
+      <tit
+        :tui="question"
+        @func1="scroll"
+      />
+      <div class="gongneng">
+        <button @click="top">暂存</button>
+        <button @click="result">提交</button>
+        <button @click="top">顶部</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   import HelloWorld from "./components/HelloWorld.vue";
+  import tit from "./components/tishi.vue";
   export default {
     name: "App",
     components: {
-      HelloWorld
+      HelloWorld,
+      tit
     },
     data() {
       return {
@@ -205,6 +212,18 @@
             },
             trueAnswer: "",
             error: false
+          },
+          {
+            id: "16",
+            question: "我是问题16",
+            answer: {
+              A: "答案A",
+              B: "答案B",
+              C: "答案C",
+              D: "答案D"
+            },
+            trueAnswer: "",
+            error: false
           }
         ],
         answer: [],
@@ -212,14 +231,7 @@
         scrollWidth: 0
       };
     },
-    mounted() {
-      let csg = document.body.scrollWidth;
-      if (csg >= 600) {
-        this.scrollWidth = 84;
-      } else {
-        this.scrollWidth = 135;
-      }
-    },
+
     methods: {
       result() {
         this.question.forEach((element, index) => {
@@ -243,16 +255,8 @@
           sessionStorage.setItem("answer", JSON.stringify(this.answer));
         });
       },
-      scroll(x) {
-        document.documentElement.scrollTop = x * this.scrollWidth + 60;
-      },
       top() {
         document.documentElement.scrollTop = 0;
-      },
-      aaaa() {
-        // console.log(this.answer);
-        // document.documentElement.scrollTop = 0;
-        console.log(document.documentElement.scrollTop);
       }
     }
   };
@@ -273,18 +277,25 @@
     box-sizing: border-box;
     .submit {
       position: fixed;
-      top: 50%;
-      right: 30%;
-      width: 50px;
-      height: 110px;
+      top: 30%;
+      right: 25%;
+      width: 210px;
       display: flex;
       flex-direction: column;
       button {
         height: 50px;
+        width: 50px;
         margin: 5px 0;
         border: none;
         outline: none;
         cursor: pointer;
+      }
+      .gongneng {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 50px;
+        margin: 10px 0;
       }
     }
   }
