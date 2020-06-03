@@ -8,10 +8,8 @@
       />
     </div>
     <div class="submit">
-      <tit
-        :tui="question"
-        @func1="scroll"
-      />
+      <countDown />
+      <tit :tui="question" />
       <div class="gongneng">
         <button @click="top">暂存</button>
         <button @click="result">提交</button>
@@ -24,11 +22,13 @@
 <script>
   import HelloWorld from "./components/HelloWorld.vue";
   import tit from "./components/tishi.vue";
+  import countDown from "./components/time.vue";
   export default {
     name: "App",
     components: {
       HelloWorld,
-      tit
+      tit,
+      countDown
     },
     data() {
       return {

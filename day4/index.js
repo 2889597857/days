@@ -1,12 +1,14 @@
 new Vue({
   el: '#time',
-  data: {
-    time: {
-      minute: '1',
-      second: '10',
-    },
-    realTime: {},
-    flag: true,
+  data() {
+    return {
+      time: {
+        minute: '1',
+        second: '10',
+      },
+      realTime: {},
+      flag: true,
+    };
   },
   mounted() {
     let a = JSON.parse(sessionStorage.getItem('time'));
@@ -42,12 +44,12 @@ new Vue({
   },
 });
 
-// window.addEventListener('beforeunload', () => {
-//   let a = document.querySelector('.minute').innerText;
-//   let b = document.querySelector('.scend').innerText;
-//   let time = {
-//     minute: a,
-//     second: b,
-//   };
-//   sessionStorage.setItem('time', JSON.stringify(time));
-// });
+window.addEventListener('beforeunload', () => {
+  let a = document.querySelector('.minute').innerText;
+  let b = document.querySelector('.scend').innerText;
+  let time = {
+    minute: a,
+    second: b,
+  };
+  sessionStorage.setItem('time', JSON.stringify(time));
+});
