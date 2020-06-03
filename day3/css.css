@@ -1,0 +1,49 @@
+#app {
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 60px;
+}
+#app .radio {
+  width: 500px;
+  margin: 10px auto;
+}
+#app .radio input {
+  cursor: pointer;
+  margin: 20px 20px;
+}
+.app {
+  width: 500px;
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  grid-auto-flow: row dense;
+  justify-content: center;
+  grid-gap: 5px;
+  margin: 10px auto;
+}
+
+.app .external {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  background: #ebf5fc;
+  box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
+    3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.app .external2 {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  background: #909399;
+  box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
+    3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.app .external .interior {
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1),
+    inset 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
