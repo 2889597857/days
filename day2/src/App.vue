@@ -8,14 +8,18 @@
       />
     </div>
     <div class="submit">
-      <countDown />
-      <tit :tui="question" />
+      <countDown ref="coontDown" />
+      <tit
+        :tui="question"
+        class="countDown"
+      />
       <div class="gongneng">
-        <button @click="top">暂存</button>
+        <button @click="save">暂存</button>
         <button @click="result">提交</button>
         <button @click="top">顶部</button>
       </div>
     </div>
+    <cover v-show="cover" />
   </div>
 </template>
 
@@ -23,12 +27,14 @@
   import HelloWorld from "./components/HelloWorld.vue";
   import tit from "./components/tishi.vue";
   import countDown from "./components/time.vue";
+  import cover from "./components/cover.vue";
   export default {
     name: "App",
     components: {
       HelloWorld,
       tit,
-      countDown
+      countDown,
+      cover
     },
     data() {
       return {
@@ -226,44 +232,54 @@
             error: false
           }
         ],
-        answer: [],
+        answer: {},
         realAnswer: [],
-        scrollWidth: 0
+        scrollWidth: 0,
+        cover: false
       };
     },
-
     methods: {
       result() {
-        this.question.forEach((element, index) => {
+        let count = this.question.length;
+        this.question.forEach(element => {
           if (!element.trueAnswer.length) {
             element.error = true;
           } else {
+            count--;
             element.error = false;
+            if (count == 0) {
+              this.cover = true;
+              const child = this.$refs.coontDown;
+              const time = child.time;
+              child.ClearInterval();
+              //ajax this.answer  time
+              sessionStorage.setItem(
+                "time",
+                JSON.stringify({
+                  minute: "05",
+                  second: "00"
+                })``
+              );
+            }
           }
-          this.answer[index] = element.trueAnswer;
-          sessionStorage.setItem("answer", JSON.stringify(this.answer));
         });
       },
-      save() {
-        this.question.forEach((element, index) => {
-          if (!element.trueAnswer.length) {
-            element.error = true;
-          } else {
-            element.error = false;
-          }
+      async save() {
+        await this.question.forEach((element, index) => {
           this.answer[index] = element.trueAnswer;
-          sessionStorage.setItem("answer", JSON.stringify(this.answer));
         });
+        sessionStorage.setItem("answer", JSON.stringify(this.answer));
+      },
+      timeOut() {
+        this.cover = true;
+        this.save();
+        // ajax   this.answer 00:00
       },
       top() {
         document.documentElement.scrollTop = 0;
       }
     }
   };
-  window.addEventListener("beforeunload", () => {
-    // console.log(vue);
-    // sessionStorage.setItem("store", JSON.stringify(this.answer));
-  });
 </script>
 
 <style lang="scss">
@@ -279,7 +295,7 @@
       position: fixed;
       top: 30%;
       right: 25%;
-      width: 210px;
+      width: 220px;
       display: flex;
       flex-direction: column;
       button {
@@ -294,8 +310,10 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        height: 50px;
-        margin: 10px 0;
+        margin: 5px 0;
+        button {
+          border-radius: 15px;
+        }
       }
     }
   }
@@ -327,11 +345,25 @@
     }
     #app {
       .submit {
-        top: 45%;
+        top: 35%;
         right: 10%;
-        width: 30px;
-        height: 60px;
+        width: 70px;
+        height: 200px;
         font-size: 10px;
+        .countDown {
+          display: none;
+        }
+        .gongneng {
+          flex-direction: column;
+          width: 100%;
+          align-items: center;
+          button {
+            width: 40px;
+            height: 40px;
+            font-size: 10px;
+            border-radius: 10px;
+          }
+        }
       }
     }
   }

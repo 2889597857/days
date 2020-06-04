@@ -11,11 +11,11 @@
     data() {
       return {
         time: {
-          minute: "15",
+          minute: "05",
           second: "00"
         },
         realTime: {},
-        flag: true
+        interval: null
       };
     },
     mounted() {
@@ -33,12 +33,14 @@
           this.time.second = 59;
           this.time.minute--;
         }
-
-        const interval = setInterval(() => {
-          this.countDown(interval);
+        this.interval = setInterval(() => {
+          this.countDown();
         }, 1000);
       },
-      countDown(interval) {
+      ClearInterval() {
+        clearInterval(this.interval);
+      },
+      countDown() {
         if (this.time.second !== 0) {
           this.time.second--;
         } else {
@@ -46,7 +48,9 @@
           this.time.minute--;
         }
         if (this.time.second == 0 && this.time.minute == 0) {
-          clearInterval(interval);
+          this.ClearInterval();
+          this.$parent.timeOut();
+          console.log(this.$parent);
         }
       }
     }
@@ -62,6 +66,8 @@
           second: b
         })
       );
+    } else {
+      sessionStorage.removeItem("time");
     }
   });
 </script>
@@ -77,6 +83,16 @@
       font-size: 30px;
       font-weight: 600;
       margin: 0 5px;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    #time {
+      height: 20px;
+      .time {
+        line-height: 20px;
+        font-size: 18px;
+        font-weight: 400;
+      }
     }
   }
 </style>
